@@ -1,5 +1,19 @@
 #include "ScalarConverter.hpp"
 
+bool is_char(std::string literal)
+{
+    if (literal.length() == 1)
+    {
+        if (!isascii(literal[0]))
+            std::cout << "impossible\n";
+        else if (!isprint(literal[0]))
+            std::cout << "Non displayable\n";
+        else if (!isdigit(literal[0]))
+            return (true);
+    }
+    return (false);
+}
+
 bool is_int(std::string literal)
 {
     for (size_t i = 0; i < literal.length(); i++)
