@@ -55,12 +55,36 @@ void handle_int(std::string literal)
 
 void handle_float(std::string literal)
 {
-    (void) literal;
-    std::cout << "is a float\n";
+    float number = std::atof( literal.c_str() );
+    char charValue = static_cast <char> (number);
+    if (!isascii(number))
+        std::cout << "char: impossible\n";
+    else if (isprint(number))
+        std::cout << "char: " << charValue << std::endl;
+    else
+        std::cout << "char: Non displayable\n";
+    if (number > INT_MAX || number < INT_MIN)
+        std::cout << "int: impossible\n";
+    else
+        std::cout << "int: " << static_cast<int> (number) << std::endl;
+    std::cout << "float: " << std::fixed << std::setprecision(1) << number << "f" << std::endl;
+    std::cout << "double: " << std::fixed << std::setprecision(1) << static_cast<double> (number) << std::endl;
 }
 
 void handle_double(std::string literal)
 {
-    std::cout << "is a double\n";
-    (void) literal;
+    double number = std::atof( literal.c_str() );
+    char charValue = static_cast <char> (number);
+    if (!isascii(number))
+        std::cout << "char: impossible\n";
+    else if (isprint(number))
+        std::cout << "char: " << charValue << std::endl;
+    else
+        std::cout << "char: Non displayable\n";
+    if (number > INT_MAX || number < INT_MIN)
+        std::cout << "int: impossible\n";
+    else
+        std::cout << "int: " << static_cast<int> (number) << std::endl;
+    std::cout << "float: " << std::fixed << std::setprecision(1) << static_cast<float> (number) << "f" << std::endl;
+    std::cout << "double: " << std::fixed << std::setprecision(1) << number << std::endl;
 }
