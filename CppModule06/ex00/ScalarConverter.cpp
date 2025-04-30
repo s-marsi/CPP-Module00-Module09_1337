@@ -16,6 +16,10 @@ void ScalarConverter::convert(std::string literal)
         std::cout << "is a int\n";
     else if (is_float(literal))
         std::cout << "is a float\n";
+    else if (is_double(literal))
+        std::cout << "is a double\n";
+    else 
+        std::cout << "bad argument.\n";
 }
 
 bool is_char(std::string literal)
@@ -52,6 +56,20 @@ bool is_int(std::string literal)
 bool is_float(std::string literal)
 {
     if (literal[literal.length() - 1] != 'f') return (false);
+    if (literal == "-inff" || literal == "+inff" ||literal == "nanf") return true;
+    bool flag = false;
+    for (size_t i = 0; i < literal.length() - 1; i++)
+    {
+        if (i == 0 && (literal[i] == '-' || literal[i] == '+')) continue;
+        else if (!isdigit(literal[i]) && (literal[i] != '.' && !flag)) return (false);
+        else if (literal[i] == '.' && isdigit(literal[i + 1])) flag = true; // to check cases like 1.f (a number should be after .)
+        else if(literal[i] == '.') return (false);
+    }
+    return (flag);
+}
+
+bool is_double(std::string literal)
+{
     if (literal == "-inff" || literal == "+inff" ||literal == "nanf") return true;
     bool flag = false;
     for (size_t i = 0; i < literal.length() - 1; i++)
