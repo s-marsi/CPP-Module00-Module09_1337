@@ -4,9 +4,9 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = Conversion
 
-SRC = main.cpp
+SRC = main.cpp ScalarConverter.cpp typeChecker.cpp
 
-INCLUDES =
+INCLUDES = ScalarConverter.hpp
 
 OBJ = $(SRC:.cpp=.o)
 
