@@ -30,3 +30,21 @@ bool is_char(std::string literal)
     return (false);
 }
 
+bool is_int(std::string literal)
+{
+    for (size_t i = 0; i < literal.length(); i++)
+    {
+        if (i == 0 && (literal[i] == '-' || literal[i] == '+'))
+            continue;
+        else if (!isdigit(literal[i]))
+            return (false);
+    }
+    long long number = std::atoll( literal.c_str() );
+    if (number > INT_MAX || number < INT_MIN)
+    {
+        std::cout << "int overflow.\n";
+        return (false);
+    }
+    std::cout << number << "\n";
+    return (true);
+}
