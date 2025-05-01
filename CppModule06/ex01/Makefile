@@ -4,9 +4,9 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = Conversion
 
-SRC = main.cpp
+SRC = main.cpp Serializer.cpp
 
-INCLUDES =
+INCLUDES = Serializer.hpp
 
 OBJ = $(SRC:.cpp=.o)
 
