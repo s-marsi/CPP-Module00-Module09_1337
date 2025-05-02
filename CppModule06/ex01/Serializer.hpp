@@ -2,8 +2,8 @@
 #include <stdint.h>
 
 struct Data {
-    std::string name;
     int         age;
+    std::string name;
 };
 
 class Serializer
