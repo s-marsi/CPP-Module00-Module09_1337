@@ -4,7 +4,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = template
 
-SRC = main.cpp whatever.cpp
+SRC = main.cpp
 
 INCLUDES = whatever.hpp
 
