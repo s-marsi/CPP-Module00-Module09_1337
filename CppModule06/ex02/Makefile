@@ -2,11 +2,11 @@ CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = Serializer
+NAME = realType 
 
-SRC = main.cpp Serializer.cpp
+SRC = main.cpp Base.cpp
 
-INCLUDES = Serializer.hpp
+INCLUDES = Base.hpp
 
 OBJ = $(SRC:.cpp=.o)
 
