@@ -63,7 +63,7 @@ void handle_float(std::string literal)
         std::cout << "char: " << charValue << std::endl;
     else
         std::cout << "char: Non displayable\n";
-    if (number > INT_MAX || number < INT_MIN)
+    if (number > (float) INT_MAX || number < (float) INT_MIN)
         std::cout << "int: impossible\n";
     else
         std::cout << "int: " << static_cast<int> (number) << std::endl;
@@ -81,7 +81,7 @@ void handle_double(std::string literal)
         std::cout << "char: " << charValue << std::endl;
     else
         std::cout << "char: Non displayable\n";
-    if (number > INT_MAX || number < INT_MIN)
+    if (number > (double) INT_MAX || number < (double) INT_MIN)
         std::cout << "int: impossible\n";
     else
         std::cout << "int: " << static_cast<int> (number) << std::endl;
