@@ -2,7 +2,8 @@
 #define SPAN_HPP
 #include <iostream>
 #include <exception>
-#include <bits/stdc++.h>
+#include <vector>
+#include <algorithm>
 
 class Span
 {
