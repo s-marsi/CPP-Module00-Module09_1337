@@ -39,16 +39,15 @@ int Span::shortestSpan()
 {
     if (index <= 1)
         throw std::runtime_error("no span can be found.\n");
-    std::vector<int>::iterator first = _numbers.begin();
-    std::vector<int>::iterator end = _numbers.end();
-    int shortest = abs(*first - *(first + 1));
-    while (first != end) {
-        std::vector<int>::iterator nested_first = first;
-        std::vector<int>::iterator nested_end = _numbers.end();
-        while (nested_first != nested_end) {
-            if (abs(*nested_first - *(nested_first + 1)) < shortest)
-            shortest = abs(*nested_first - *(nested_first + 1));
-            nested_first++;
+    std::vector<int> tmp = _numbers;
+    std::sort(tmp.begin(), tmp.end());
+    int shortest = tmp[1] - tmp[0];
+    std::vector<int>::iterator first = tmp.begin();
+    while (first != tmp.end()) {
+        if ( (first + 1) != tmp.end() ) {
+            int next = *(first + 1); 
+            if ( (next - *first) < shortest )
+                shortest = next - *first;
         }
         first++;
     }
@@ -59,19 +58,10 @@ int Span::longestSpan()
 {
     if (index <= 1)
         throw std::runtime_error("no span can be found.\n");
-    std::vector<int>::iterator first = _numbers.begin();
-    std::vector<int>::iterator end = _numbers.end();
-    int longest = abs(*first - *(first + 1));
-    while (first != end) {
-        std::vector<int>::iterator nested_first = first;
-        std::vector<int>::iterator nested_end = _numbers.end();
-        while (nested_first != nested_end) {
-            if (abs(*nested_first - *(nested_first + 1)) > longest)
-                longest = abs(*nested_first - *(nested_first + 1));
-            nested_first++;
-        }
-        first++;
-    }
+    std::vector<int> tmp = _numbers;
+    std::sort( tmp.begin(), tmp.end() );
+    std::reverse( tmp.begin(), tmp.end() );
+    int longest = tmp[0] - *(tmp.end() - 1);
     return (longest);
 }
 
