@@ -17,7 +17,7 @@ class Span
         Span &operator=(Span &rhs);
         void addNumber(int number);
         template <typename T>
-        void addNumbers(T first, T end)
+        void addNumber(T first, T end)
         { 
             int i = 0;
             while (first != end) {
