@@ -10,14 +10,11 @@ template <typename T>
 class MutantStack : public std::stack<T>
 {
     public:
-        MutantStack()
-        { };
+        MutantStack();
 
-        MutantStack(MutantStack &rhs)
-        { *this = rhs; };
+        MutantStack(MutantStack &rhs);
 
-        MutantStack &operator=(MutantStack &rhs)
-        { (void) rhs; return (*this); };
+        MutantStack &operator=(MutantStack &rhs);
 
         typedef typename std::deque<T>::iterator iterator;
 
@@ -35,9 +32,9 @@ class MutantStack : public std::stack<T>
         const_iterator cend() 
         { return MutantStack::c.cend(); }
 
-        ~MutantStack(){};
+        ~MutantStack();
 };
 
-// #include "MutantStack.tpp"
+#include "MutantStack.tpp"
 
 #endif
