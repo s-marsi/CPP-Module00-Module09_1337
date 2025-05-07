@@ -6,7 +6,7 @@ NAME = MutantStack
 
 SRC = main.cpp
 
-INCLUDES = MutantStack.hpp
+INCLUDES = MutantStack.hpp MutantStack.tpp
 
 OBJ = $(SRC:.cpp=.o)
 
