@@ -11,7 +11,6 @@ int main()
             sp.addNumber(3);
             sp.addNumber(4);
             // sp.getNumbers();
-            // sp.addNumber(12); // should throw a exception
             std::cout << sp.shortestSpan() << std::endl;
             std::cout << sp.longestSpan() << std::endl;
         } catch (std::exception &e) {
@@ -24,18 +23,38 @@ int main()
     {
         try {
             Span sp(5);
-            sp.addNumber(6);
-            sp.addNumber(3);
-            sp.addNumber(17);
-            sp.addNumber(9);
-            sp.addNumber(11);
-            // sp.getNumbers();
-            // sp.addNumber(12); // should throw a exception
+            std::vector<int> numbers;
+
+            for (int i = 0; i < 5; i++) {
+                numbers.push_back(i);
+            }
+
+            sp.addNumber(numbers.begin(),  numbers.end());
             std::cout << sp.shortestSpan() << std::endl;
             std::cout << sp.longestSpan() << std::endl;
         } catch (std::exception &e) {
             std::cout << e.what();
         }
     }
+
+    std::cout << "\n-----------------------------------\n" << std::endl;
+
+    {
+        try {
+            Span sp(5);
+            std::vector<int> numbers;
+            
+            for (int i = 0; i < 6; i++) {
+                numbers.push_back(i);
+            }
+
+            sp.addNumber(numbers.begin(),  numbers.end());
+            std::cout << sp.shortestSpan() << std::endl;
+            std::cout << sp.longestSpan() << std::endl;
+        } catch (std::exception &e) {
+            std::cout << e.what();
+        }
+    }
+
     return (0);
 }

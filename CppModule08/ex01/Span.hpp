@@ -9,7 +9,6 @@ class Span
 {
     private:
         unsigned int _capacity;
-        unsigned int index;
         std::vector<int> _numbers;
         Span();
     public:
@@ -17,6 +16,18 @@ class Span
         Span(Span &rhs);
         Span &operator=(Span &rhs);
         void addNumber(int number);
+        template <typename T>
+        void addNumber(T first, T end)
+        { 
+            int i = 0;
+            while (first != end) {
+                if ( _numbers.size() >= _capacity )
+                    throw ( std::runtime_error("Span is full..\n") );
+                _numbers.push_back(*first);
+                i++;
+                first++;
+            }
+        }
         int shortestSpan();
         int longestSpan();
         void getNumbers();

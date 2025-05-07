@@ -2,7 +2,7 @@
 
 Span::Span() { }
 
-Span::Span(unsigned int N): _capacity(N), index(0) { };
+Span::Span(unsigned int N): _capacity(N) { };
 
 Span::Span(Span &rhs) { 
     *this = rhs;
@@ -17,12 +17,10 @@ Span &Span::operator=(Span &rhs) {
 }
 
 void Span::addNumber(int number) {
-    if (index < _capacity) {
-        index++;
+    if (_numbers.size() < _capacity)
         _numbers.push_back(number);
-    }
     else
-        throw std::out_of_range("Span is fill.\n");
+        throw std::runtime_error("Span is full.\n");
 }
 
 void Span::getNumbers() {
@@ -37,7 +35,7 @@ void Span::getNumbers() {
 
 int Span::shortestSpan()
 {
-    if (index <= 1)
+    if (_numbers.empty() || _numbers.size() <= 1)
         throw std::runtime_error("no span can be found.\n");
     std::vector<int> tmp = _numbers;
     std::sort(tmp.begin(), tmp.end());
@@ -56,12 +54,11 @@ int Span::shortestSpan()
 
 int Span::longestSpan()
 {
-    if (index <= 1)
+    if (_numbers.empty() || _numbers.size() <= 1)
         throw std::runtime_error("no span can be found.\n");
     std::vector<int> tmp = _numbers;
     std::sort( tmp.begin(), tmp.end() );
-    std::reverse( tmp.begin(), tmp.end() );
-    int longest = tmp[0] - *(tmp.end() - 1);
+    int longest =  *(tmp.end() - 1) - tmp[0];
     return (longest);
 }
 
