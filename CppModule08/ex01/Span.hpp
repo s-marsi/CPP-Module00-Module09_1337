@@ -22,7 +22,7 @@ class Span
             int i = 0;
             while (first != end) {
                 if ( _numbers.size() >= _capacity )
-                    throw ( std::runtime_error("Span is full.\n") );
+                    throw ( std::runtime_error("Span is full..\n") );
                 _numbers.push_back(*first);
                 i++;
                 first++;
