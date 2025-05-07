@@ -5,15 +5,22 @@
 
 
 template <typename T>
+MutantStack<T>::MutantStack()
+{ };
+
+template <typename T>
 MutantStack<T>::MutantStack(MutantStack &rhs)
-{
-    *this = rhs;
-}
+{ *this = rhs; };
+
 template <typename T>
 MutantStack<T> & MutantStack<T>::operator=(MutantStack &rhs)
 {
     (void) rhs;
     return (*this);
 }
+
+template <typename T>
+MutantStack<T>::~MutantStack()
+{ };
 
 #endif
