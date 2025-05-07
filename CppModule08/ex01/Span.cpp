@@ -58,8 +58,7 @@ int Span::longestSpan()
         throw std::runtime_error("no span can be found.\n");
     std::vector<int> tmp = _numbers;
     std::sort( tmp.begin(), tmp.end() );
-    std::reverse( tmp.begin(), tmp.end() );
-    int longest = tmp[0] - *(tmp.end() - 1);
+    int longest =  *(tmp.end() - 1) - tmp[0];
     return (longest);
 }
 
