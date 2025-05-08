@@ -11,4 +11,6 @@ BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange &rhs)
     return (*this);
 }
 
+bool numberRange(long nbr) { return ( nbr >= 0 && nbr <= 1000); }
+
 BitcoinExchange::~BitcoinExchange() { }
