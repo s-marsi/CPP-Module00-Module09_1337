@@ -9,5 +9,5 @@ template <typename T> void easyfind(T arg1, int arg2) {
     if (it != arg1.end())
         std::cout << *it << " Is Present\n";
     else
-        throw "Not Present\n";
+        throw std::runtime_error("Not Present\n");
 }
