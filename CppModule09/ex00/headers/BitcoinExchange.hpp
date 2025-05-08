@@ -19,8 +19,10 @@ class BitcoinExchange
         std::map<int, Data> map;
     public:
         BitcoinExchange();
+        BitcoinExchange(std::string &input);
         BitcoinExchange(BitcoinExchange &rhs);
         BitcoinExchange &operator=(BitcoinExchange &rhs);
+        bool numberRange(long nbr);
         ~BitcoinExchange();
 };
 
