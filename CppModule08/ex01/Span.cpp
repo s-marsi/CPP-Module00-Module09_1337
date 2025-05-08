@@ -40,15 +40,6 @@ int Span::shortestSpan()
     std::vector<int> tmp = _numbers;
     std::sort(tmp.begin(), tmp.end());
     int shortest = tmp[1] - tmp[0];
-    std::vector<int>::iterator first = tmp.begin();
-    while (first != tmp.end()) {
-        if ( (first + 1) != tmp.end() ) {
-            int next = *(first + 1); 
-            if ( (next - *first) < shortest )
-                shortest = next - *first;
-        }
-        first++;
-    }
     return (shortest);
 }
 
