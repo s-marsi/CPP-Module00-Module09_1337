@@ -6,10 +6,10 @@ int main()
         try {
             Span sp(5);
             sp.addNumber(0);
-            sp.addNumber(1);
-            sp.addNumber(2);
-            sp.addNumber(3);
-            sp.addNumber(4);
+            sp.addNumber(10);
+            sp.addNumber(20);
+            sp.addNumber(-8);
+            sp.addNumber(30);
             // sp.getNumbers();
             std::cout << sp.shortestSpan() << std::endl;
             std::cout << sp.longestSpan() << std::endl;
