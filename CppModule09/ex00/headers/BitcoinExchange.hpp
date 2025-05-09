@@ -6,23 +6,30 @@
 #include <map>
 #include <algorithm>
 
+
 struct Data {
     std::string date;
-    int         value;
+    std::string value;
     Data        *next;
 };
+typedef std::map<int, Data>::iterator iterator;
 
 class BitcoinExchange
 {
     private:
+        std::string file_name;
+        std::ifstream _file;
         Data data;
         std::map<int, Data> map;
-    public:
         BitcoinExchange();
-        BitcoinExchange(std::string &input);
+    public:
+        BitcoinExchange(std::string &inputinput);
         BitcoinExchange(BitcoinExchange &rhs);
         BitcoinExchange &operator=(BitcoinExchange &rhs);
-        bool numberRange(long nbr);
+        int numberRange(double nbr);
+        void parseData();
+        void check_syntax(Data &data, std::string &line);
+        void is_valid_number(Data &data, std::string &line);
         ~BitcoinExchange();
 };
 
