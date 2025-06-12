@@ -1,11 +1,32 @@
 #include "../headers/BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange(): file_name("")  { }
+void BitcoinExchange::load_csv() {
+    std::ifstream csv("resources/data.csv");
+    if (!csv.is_open())
+        throw  std::runtime_error ("Error: Unable to open data.csv file!");
+    int i = 0;
+    std::string line;
+    std::getline(csv, line);
+    while (std::getline(csv, line)) {
+        std::size_t pos = line.find(',', 0);
+        if (pos != std::string::npos) {
+            std::string line_before_comma  = line;
+            std::string line_after_comma  = line;
+            line_before_comma.erase(pos);
+            line_after_comma.erase(0, pos + 1);
+            csv_data.insert({line_before_comma, std::atof(line_after_comma.c_str())});
+            i++;
+        }
+    }
+}
 
-BitcoinExchange::BitcoinExchange(std::string &input): file_name(input), _file(input.c_str()) { 
+BitcoinExchange::BitcoinExchange(): file_name(""), _file() { load_csv(); }
+
+BitcoinExchange::BitcoinExchange(std::string &input): file_name(input), _file(input.c_str()) {
     if (!_file.is_open()) {
         throw  std::runtime_error ("Error: Unable to open file!");
     }
+    load_csv();
 }
 
 
@@ -21,36 +42,9 @@ BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange &rhs)
             _file.close();
         _file.open(file_name.c_str());
         data = rhs.data;
-        map = rhs.map;
+        csv_data = rhs.csv_data;
     }
     return (*this);
-}
-
-int BitcoinExchange::numberRange(double nbr) { 
-    return ( (nbr >= 0 && nbr <= 1000) ? 0 : (nbr < 0) ? 1 : 2 ); 
-}
-
-bool check_first_last_character(std::string &number) // firt is a space, last is a digit
-{
-    return (number[0] != ' ' || ! std::isdigit(number[number.length() - 1]));
-}
-
-bool check_valid_dot_digit(Data &data) {
-    std::string &number = data.value;
-    int dot_counter = 0;
-    if ( number[1] && number[1] != '-' && !std::isdigit(number[1]) ) // not - and not digit like: date | .1
-        return (false);
-    for (size_t i = 1; i < number.length(); i++) {
-        if (number[i] == '.')
-            dot_counter++;
-        else if (i == 1 && number[i] == '-')
-            continue;
-        if ( dot_counter > 1 ) //case like (1..1, 1.1.1, 1r1) 
-            return (false);
-        if (!std::isdigit(number[i]))
-            return (false);
-    }
-    return (true);
 }
 
 void BitcoinExchange::is_valid_number(Data &data, std::string &line) {
@@ -60,7 +54,6 @@ void BitcoinExchange::is_valid_number(Data &data, std::string &line) {
         data.value = line;
         return ;
     }
-
     int is_number = numberRange(std::atof(data.value.c_str()));
     if (!is_number)
         return ;
@@ -71,40 +64,72 @@ void BitcoinExchange::is_valid_number(Data &data, std::string &line) {
     data.value = "";
 }
 
+void BitcoinExchange::is_valid_date(Data &data, std::string &line) {
+    std::string &date = data.date;
+    if ( check_date_format(date) )
+    {
+        data.date = "Error: bad input => ";
+        data.value = line;
+        return ;
+    }
+    std::string year = data.date;
+    std::string month = data.date;
+    std::string day = data.date;
+
+    year.erase(4);
+    month.erase(0, 5).erase(2);
+    day.erase(0, 8).erase(2);
+    if (!is_only_digit(year) || !is_only_digit(month) || !is_only_digit(day) || !is_in_date_range(year, month, day)) {
+        data.date = "Error: bad input => ";
+        data.value = line;
+        return ;
+    }
+}
+
 void BitcoinExchange::check_syntax(Data &data, std::string &line) {
-    // if (data.value && data.value[0] != ' ')
-        // continue working on check syntax for number ...
+    is_valid_date(data, line);
     is_valid_number(data, line);
 }
 
 void BitcoinExchange::parseData() {
     int i = 0;
     std::string line;
-    while (std::getline (_file, line)) {
-        Data data;
-        std::size_t pos = line.find('|', 0);
-        std::string line_before_pipe  = line;
-        std::string line_after_pipe  = line;
+    while (std::getline(_file, line)) {
+        if (i == 0) {
+            if (line !=  "date | value")
+                std::cout << "Error: bad input => " << line << std::endl;
+            else
+                std::cout << line << std::endl;
+        }
+        else {
+            Data data;
+            std::size_t pos = line.find('|', 0);
+            std::string line_before_pipe  = line;
+            std::string line_after_pipe  = line;
 
-        if (pos != std::string::npos) {
-            line_before_pipe.erase(pos);
-            line_after_pipe.erase(0, pos + 1);
-            data.date = line_before_pipe;
-            data.value = line_after_pipe;
-            check_syntax(data, line);
+            if (pos != std::string::npos) {
+                line_before_pipe.erase(pos);
+                line_after_pipe.erase(0, pos + 1);
+                data.date = line_before_pipe;
+                data.value = line_after_pipe;
+                check_syntax(data, line);
+                // to move later into a separate function;
+                // 2011-01-03 => 3 = 0.9
+                    if (isdigit(data.date[0])) {
+                        std::map<std::string, float>::iterator searched;
+                        searched = csv_data.lower_bound(data.date);
+                        float value = std::atof(data.value.c_str()) * searched->second;
+                        std::cout << data.date << " =>" << data.value << " = " << value << std::endl;
+                    }
+                    else
+                        std::cout << data.date << data.value << std::endl;
+            }
+            else { // No pipe Found
+                data.date = "Error: bad input => ";
+                data.value = line;
+            }
         }
-        else { // No pipe FOund
-            data.date = "Error: bad input => ";
-            data.value = line;
-        }
-        map.insert(std::pair<int, Data>(i, data));
         i++;
-    }
-    iterator first = map.begin();
-    iterator last = map.end();
-    while (first != last) {
-        std::cout << first->second.date << first->second.value << std::endl;
-        first++;
     }
 }
 
