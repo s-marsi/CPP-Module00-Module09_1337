@@ -14,7 +14,7 @@ void BitcoinExchange::load_csv() {
             std::string line_after_comma  = line;
             line_before_comma.erase(pos);
             line_after_comma.erase(0, pos + 1);
-            csv_data.insert({line_before_comma, std::atof(line_after_comma.c_str())});
+            csv_data.insert(std::make_pair(line_before_comma, std::atof(line_after_comma.c_str())));
             i++;
         }
     }
