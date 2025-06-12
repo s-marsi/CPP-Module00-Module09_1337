@@ -4,7 +4,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = btc
 
-SRC = main.cpp src/BitcoinExchange.cpp
+SRC = main.cpp src/BitcoinExchange.cpp src/helpers.cpp
 
 INCLUDES = headers/BitcoinExchange.hpp
 OBJ = $(SRC:.cpp=.o)
