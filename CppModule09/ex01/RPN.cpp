@@ -11,15 +11,15 @@ RPN &RPN::operator=(RPN &rhs) {
     return (*this);
 }
 
-// int calculate(char &operation, int &left_operator, int &right_operator) {
-//     if (operation == '+')
-//         return (left_operator + right_operator);
-//     if (operation == '-')
-//         return (left_operator - right_operator);
-//     if (operation == '*')
-//         return (left_operator * right_operator);
-//     return (left_operator / right_operator);
-// }
+int calculate(char &operation, int &left_operator, int &right_operator) {
+    if (operation == '+')
+        return (left_operator + right_operator);
+    if (operation == '-')
+        return (left_operator - right_operator);
+    if (operation == '*')
+        return (left_operator * right_operator);
+    return (left_operator / right_operator);
+}
 
 bool is_operator(std::string expr) {
     std::string operators = "+-*/";
