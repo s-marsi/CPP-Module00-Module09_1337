@@ -41,10 +41,12 @@ bool is_operator(std::string expr) {
 }
 
 void RPN::evaluator(char *expr) {
+    bool flag = false;
     while (expr != NULL)
     { 
         pars_expr(expr);
         if (is_operator(expr)) {
+            flag = true;
             std::string current_expr = expr;
             if (my_stack.size() < 2 || current_expr.length() > 1) {
                 std::cout << "Error\n";
@@ -63,6 +65,11 @@ void RPN::evaluator(char *expr) {
         }
         expr = strtok(NULL, " ");
     }
+    if (!flag) {
+        std::cout << "Error\n";
+        return ;
+    }
+
     std::cout << my_stack.top() << std::endl;
 }
 
