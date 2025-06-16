@@ -2,12 +2,13 @@
 #define RPN_HPP
 #include <iostream>
 #include <stdio.h>
-
 #include <string.h>
 #include <stack>
+#include <stdlib.h>
 
 bool is_operator(std::string expr);
 int  calculate(char &operation, int &left_operator, int &right_operator);
+void pars_expr(char *expr) ;
 class RPN
 {
     private:
@@ -16,7 +17,7 @@ class RPN
         RPN();
         RPN(RPN &rhs);
         RPN &operator=(RPN &rhs);
-        // void evaluate(char *expr);
+        void evaluator(char *expr);
         ~RPN();
 };
 
