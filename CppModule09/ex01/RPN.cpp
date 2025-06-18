@@ -69,7 +69,6 @@ void RPN::evaluator(char *expr) {
         std::cout << "Error\n";
         return ;
     }
-
     std::cout << my_stack.top() << std::endl;
 }
 
