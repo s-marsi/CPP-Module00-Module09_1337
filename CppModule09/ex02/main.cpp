@@ -26,5 +26,7 @@ int main(int ac, char *av[])
         print_error_exit();
     }
     parse_args(ac, av);
+    PmergeMe test(ac, av);
+    test.merge_insert_sort();
     return (0);
 }
