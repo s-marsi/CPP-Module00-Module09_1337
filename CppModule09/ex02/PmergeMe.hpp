@@ -23,5 +23,6 @@ class PmergeMe
         void split_pairs();
         ~PmergeMe();
 };
-
+void merge_sort(std::vector<int> &arr_to_sort, int left, int right);
+bool array_is_sorted(std::vector<int> &arr_to_sort);
 #endif
