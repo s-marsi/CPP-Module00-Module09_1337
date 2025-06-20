@@ -55,6 +55,12 @@ void  PmergeMe::merge_insert_sort()
     print_vector(largest);
     std::cout << std::setw(20) << "lowest numbers: ";
     print_vector(lowest);
+
+    if (!array_is_sorted(largest))
+        merge_sort(largest, 0, largest.size() - 1);
+    print_vector(largest);
+    print_vector(lowest);
+
 }
 
 PmergeMe::PmergeMe(int ac, char *av[]): leftover(-1)
