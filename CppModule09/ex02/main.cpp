@@ -32,7 +32,9 @@ int main(int ac, char *av[])
         parse_args(ac, av);
             
         PmergeMe test;
-        test.merge_insert_sort();
+        test.merge_insert_sort_vector(ac, av);
+        test.merge_insert_sort_deque(ac, av);
+
     }
     catch(const std::exception& e)
     {
