@@ -1,5 +1,5 @@
-#ifndef ARRAY_TPP
-#define ARRAY_TPP
+#ifndef MERGE_SORT_TPP
+#define MERGE_SORT_TPP
 
 template <typename T>
 bool array_is_sorted(T &arr_to_sort) {
@@ -65,7 +65,6 @@ void merge_sort(T &arr_to_sort, int left, int right) {
     int middle = (left + right) / 2;
     merge_sort(arr_to_sort, left, middle);   
     merge_sort(arr_to_sort, middle + 1, right);
-    // std::cout << "-------- [left = " << left << "]" << " [right= " << right << "]" << " [middle= " << middle << "]" << std::endl;
     merge(arr_to_sort, left, middle, right);
 }
 
