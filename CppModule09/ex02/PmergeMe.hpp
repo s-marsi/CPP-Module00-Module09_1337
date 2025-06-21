@@ -16,6 +16,8 @@ class PmergeMe
     pair_vector pair_vector;
     pair_deque pair_deque;
 
+    std::vector<int> args; // to save the args in the same order because we need to print it at the end of the program
+
     std::vector<int> largest;
     std::vector<int> lowest;
 
@@ -38,5 +40,7 @@ class PmergeMe
 };
 
 #include "merge_sort.tpp"
+#include "binary_search_insertion.tpp"
+#include "helpers.tpp"
 
 #endif
