@@ -55,11 +55,11 @@ void BitcoinExchange::is_valid_number(Data &data, std::string &line) {
         return ;
     }
     int is_number = numberRange(std::atof(data.value.c_str()));
-    if (!is_number)
+    if ( !is_number )
         return ;
-    if (is_number == 1)
+    if ( is_number == 1 )
         data.date = "Error: not a positive number.";
-    else if (is_number == 2)
+    else if ( is_number == 2 )
         data.date = "Error: too large a number.";
     data.value = "";
 }
@@ -125,8 +125,7 @@ void BitcoinExchange::parseData() {
                         std::cout << data.date << data.value << std::endl;
             }
             else { // No pipe Found
-                data.date = "Error: bad input => ";
-                data.value = line;
+                std::cout << "Error: bad input => " << line << std::endl;
             }
         }
         i++;
