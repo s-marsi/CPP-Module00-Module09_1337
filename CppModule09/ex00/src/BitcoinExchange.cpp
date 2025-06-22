@@ -125,8 +125,7 @@ void BitcoinExchange::parseData() {
                         std::cout << data.date << data.value << std::endl;
             }
             else { // No pipe Found
-                data.date = "Error: bad input => ";
-                data.value = line;
+                std::cout << "Error: bad input => " << line << std::endl;
             }
         }
         i++;
