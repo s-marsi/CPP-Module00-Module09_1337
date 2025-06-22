@@ -91,6 +91,24 @@ void BitcoinExchange::check_syntax(Data &data, std::string &line) {
     is_valid_number(data, line);
 }
 
+void BitcoinExchange::print_result(Data &data) {
+    if (isdigit(data.date[0])) {
+        std::map<std::string, std::string>::const_reverse_iterator searched;
+        for (searched = csv_data.rbegin(); searched != csv_data.rend(); ++searched) {
+            if (searched->first <= data.date) {
+                break;
+            }
+        }
+        if (searched == csv_data.rend())
+            searched--;
+        float value = std::atof(data.value.c_str()) * std::atof(searched->second.c_str());
+        std::cout << data.date << " =>" << data.value << " = " << value << std::endl;
+    }
+    else {
+        std::cout << data.date << data.value << std::endl;
+    }
+}
+
 void BitcoinExchange::parseData() {
     int i = 0;
     std::string line;
@@ -115,21 +133,7 @@ void BitcoinExchange::parseData() {
                 check_syntax(data, line);
                 // to move later into a separate function;
                 // 2011-01-03 => 3 = 0.9
-                    if (isdigit(data.date[0])) {
-                        std::map<std::string, std::string>::const_reverse_iterator searched;
-                        for (searched = csv_data.rbegin(); searched != csv_data.rend(); ++searched) {
-                            if (searched->first <= data.date) {
-                                break;
-                            }
-                        }
-                        if (searched == csv_data.rend())
-                            searched--;
-                        float value = std::atof(data.value.c_str()) * std::atof(searched->second.c_str());
-                        std::cout << data.date << " =>" << data.value << " = " << value << std::endl;
-                    }
-                    else {
-                        std::cout << data.date << data.value << std::endl;
-                    }
+                print_result(data);
             }
             else { // No pipe Found
                 std::cout << "Error: bad input => " << line << std::endl;
