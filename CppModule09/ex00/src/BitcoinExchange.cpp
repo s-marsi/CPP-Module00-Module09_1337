@@ -14,7 +14,7 @@ void BitcoinExchange::load_csv() {
             std::string line_after_comma  = line;
             line_before_comma.erase(pos);
             line_after_comma.erase(0, pos + 1);
-            csv_data.insert(std::make_pair(line_before_comma, std::atof(line_after_comma.c_str())));
+            csv_data.insert(std::make_pair(line_before_comma, line_after_comma));
             i++;
         }
     }
@@ -116,13 +116,20 @@ void BitcoinExchange::parseData() {
                 // to move later into a separate function;
                 // 2011-01-03 => 3 = 0.9
                     if (isdigit(data.date[0])) {
-                        std::map<std::string, float>::iterator searched;
-                        searched = csv_data.lower_bound(data.date);
-                        float value = std::atof(data.value.c_str()) * searched->second;
+                        std::map<std::string, std::string>::const_reverse_iterator searched;
+                        for (searched = csv_data.rbegin(); searched != csv_data.rend(); ++searched) {
+                            if (searched->first <= data.date) {
+                                break;
+                            }
+                        }
+                        if (searched == csv_data.rend())
+                            searched--;
+                        float value = std::atof(data.value.c_str()) * std::atof(searched->second.c_str());
                         std::cout << data.date << " =>" << data.value << " = " << value << std::endl;
                     }
-                    else
+                    else {
                         std::cout << data.date << data.value << std::endl;
+                    }
             }
             else { // No pipe Found
                 std::cout << "Error: bad input => " << line << std::endl;
