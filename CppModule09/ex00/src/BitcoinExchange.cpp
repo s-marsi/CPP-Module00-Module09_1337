@@ -79,7 +79,7 @@ void BitcoinExchange::is_valid_date(Data &data, std::string &line) {
     year.erase(4);
     month.erase(0, 5).erase(2);
     day.erase(0, 8).erase(2);
-    if (!is_only_digit(year) || !is_only_digit(month) || !is_only_digit(day) || !is_in_date_range(year, month, day)) {
+    if (!is_only_digit(year) || !is_only_digit(month) || !is_only_digit(day) || !is_in_date_range(atoi(year.c_str()), atoi(month.c_str()), atoi(day.c_str()))) {
         data.date = "Error: bad input => ";
         data.value = line;
         return ;
@@ -131,8 +131,6 @@ void BitcoinExchange::parseData() {
                 data.date = line_before_pipe;
                 data.value = line_after_pipe;
                 check_syntax(data, line);
-                // to move later into a separate function;
-                // 2011-01-03 => 3 = 0.9
                 print_result(data);
             }
             else { // No pipe Found
