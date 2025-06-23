@@ -14,7 +14,7 @@ void BitcoinExchange::load_csv() {
             std::string line_after_comma  = line;
             line_before_comma.erase(pos);
             line_after_comma.erase(0, pos + 1);
-            csv_data.insert(std::make_pair(line_before_comma, std::atof(line_after_comma.c_str())));
+            csv_data.insert(std::make_pair(line_before_comma, line_after_comma));
             i++;
         }
     }
@@ -79,7 +79,7 @@ void BitcoinExchange::is_valid_date(Data &data, std::string &line) {
     year.erase(4);
     month.erase(0, 5).erase(2);
     day.erase(0, 8).erase(2);
-    if (!is_only_digit(year) || !is_only_digit(month) || !is_only_digit(day) || !is_in_date_range(year, month, day)) {
+    if (!is_only_digit(year) || !is_only_digit(month) || !is_only_digit(day) || !is_in_date_range(atoi(year.c_str()), atoi(month.c_str()), atoi(day.c_str()))) {
         data.date = "Error: bad input => ";
         data.value = line;
         return ;
@@ -89,6 +89,24 @@ void BitcoinExchange::is_valid_date(Data &data, std::string &line) {
 void BitcoinExchange::check_syntax(Data &data, std::string &line) {
     is_valid_date(data, line);
     is_valid_number(data, line);
+}
+
+void BitcoinExchange::print_result(Data &data) {
+    if (isdigit(data.date[0])) {
+        std::map<std::string, std::string>::const_reverse_iterator searched;
+        for (searched = csv_data.rbegin(); searched != csv_data.rend(); ++searched) {
+            if (searched->first <= data.date) {
+                break;
+            }
+        }
+        if (searched == csv_data.rend())
+            searched--;
+        float value = std::atof(data.value.c_str()) * std::atof(searched->second.c_str());
+        std::cout << data.date << " =>" << data.value << " = " << value << std::endl;
+    }
+    else {
+        std::cout << data.date << data.value << std::endl;
+    }
 }
 
 void BitcoinExchange::parseData() {
@@ -113,16 +131,7 @@ void BitcoinExchange::parseData() {
                 data.date = line_before_pipe;
                 data.value = line_after_pipe;
                 check_syntax(data, line);
-                // to move later into a separate function;
-                // 2011-01-03 => 3 = 0.9
-                    if (isdigit(data.date[0])) {
-                        std::map<std::string, float>::iterator searched;
-                        searched = csv_data.lower_bound(data.date);
-                        float value = std::atof(data.value.c_str()) * searched->second;
-                        std::cout << data.date << " =>" << data.value << " = " << value << std::endl;
-                    }
-                    else
-                        std::cout << data.date << data.value << std::endl;
+                print_result(data);
             }
             else { // No pipe Found
                 std::cout << "Error: bad input => " << line << std::endl;

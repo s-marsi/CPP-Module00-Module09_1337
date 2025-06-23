@@ -1,7 +1,7 @@
 #include "../headers/BitcoinExchange.hpp"
 
-bool numberRange(double nbr) { 
-    return ( (nbr >= 0 && nbr <= 1000) ? 0 : (nbr < 0) ? 1 : 2 ); 
+int numberRange(double nbr) { 
+    return ( (nbr >= 0 && nbr <= 1000) ? 0 : nbr < 0 ? 1 : 2 ); 
 }
 
 bool check_first_last_character(std::string &number) // firt is a space, last is a digit
@@ -40,19 +40,17 @@ bool is_only_digit(std::string &str) {
     return (true);
 }
 
-bool is_in_date_range(std::string &year, std::string &month, std::string &day) {
-    time_t      timestamp = time(NULL);
-    struct tm   *date = localtime(&timestamp);
-    char        current_year[5];
-    strftime(current_year, 5, "%Y", date);
-    if (atoi(year.c_str()) < 0 || atoi(year.c_str()) > atoi(current_year))
+bool is_in_date_range(int year, int month, int day) {
+    if (( year % 4 == 0 && year % 100 != 0 ) || year % 400 == 0) 
+    {
+        if ( ( month  == 2 && ( day < 1  ||  day > 29)))
+            return (false);
+    }
+    else if ( ( month == 2 && ( day < 1  ||  day > 28)))
         return (false);
-    
-    if (atoi(month.c_str()) < 1 || atoi(month.c_str()) > 12)
+    if (month < 1 || month > 12)
         return (false);
-    if ( ( atoi(month.c_str() ) == 2 && ( atoi(day.c_str()) < 1  ||  atoi(day.c_str()) > 29)))
-        return (false);
-    if ( atoi(day.c_str()) < 1 ||  atoi(day.c_str()) > 31 )
+    if ( day < 1 ||  day > 31 )
         return (false);     
     return (true);
 }
