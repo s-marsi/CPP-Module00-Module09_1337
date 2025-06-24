@@ -7,7 +7,7 @@ bool array_is_sorted(T &arr_to_sort) {
      return (true);
     bool is_sorted = false;
     for (size_t i = 0; i < arr_to_sort.size() - 1; i++) {
-        if (arr_to_sort[i] > arr_to_sort[i+1])
+        if (arr_to_sort[i].second > arr_to_sort[i+1].second)
         {
             is_sorted = 1;
             break;
@@ -33,7 +33,7 @@ void merge(T &arr_to_sort, int left, int mid, int right) {
 
     int i = 0, j = 0;
     while (i < len_left && j < len_right) {
-        if (left_tmp[i] <= right_tmp[j]) {
+        if (left_tmp[i].second <= right_tmp[j].second) {
             arr_to_sort[k] = left_tmp[i];
             i++;
         }

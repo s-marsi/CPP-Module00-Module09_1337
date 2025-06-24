@@ -54,10 +54,11 @@ void  PmergeMe::merge_insert_sort_vector(int ac, char *av[])
 	std::clock_t end;
     start = std::clock();
     args_to_vector(ac, av);
+    if (!array_is_sorted(pair_vector))
+        merge_sort(pair_vector, 0, pair_vector.size() - 1);
     split_pairs("vector");
-    if (!array_is_sorted(largest))
-        merge_sort(largest, 0, largest.size() - 1);
-    for(size_t i = 0; i < lowest.size(); i++)
+    largest.insert(largest.begin(), lowest[0]);
+    for(size_t i = 1; i < lowest.size(); i++)
     {
         binary_search_insert(largest, lowest[i], 0, largest.size() - 1);
     }
@@ -96,10 +97,11 @@ void  PmergeMe::merge_insert_sort_deque(int ac, char *av[])
 	std::clock_t end;
     start = std::clock();
     args_to_deque(ac, av);
+    if (!array_is_sorted(pair_deque))
+        merge_sort(pair_deque, 0, pair_deque.size() - 1);
     split_pairs("deque");
-    if (!array_is_sorted(largest_dq))
-        merge_sort(largest_dq, 0, largest_dq.size() - 1);
-    for(size_t i = 0; i < lowest_dq.size(); i++)
+    largest_dq.insert(largest_dq.begin(), lowest_dq[0]);
+    for(size_t i = 1; i < lowest_dq.size(); i++)
     {
         binary_search_insert(largest_dq, lowest_dq[i], 0, largest_dq.size() - 1);
     }
