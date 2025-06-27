@@ -53,17 +53,24 @@ void  PmergeMe::merge_insert_sort_vector(int ac, char *av[])
     std::clock_t start;
 	std::clock_t end;
     start = std::clock();
-    args_to_vector(ac, av);
-    if (!array_is_sorted(pair_vector))
-        merge_sort(pair_vector, 0, pair_vector.size() - 1);
-    split_pairs("vector");
-    largest.insert(largest.begin(), lowest[0]);
-    for(size_t i = 1; i < lowest.size(); i++)
-    {
-        binary_search_insert(largest, lowest[i], 0, largest.size() - 1);
+    if (ac > 2) {
+         args_to_vector(ac, av);
+        if (!array_is_sorted(pair_vector))
+            merge_sort(pair_vector, 0, pair_vector.size() - 1);
+        split_pairs("vector");
+        largest.insert(largest.begin(), lowest[0]);
+        for(size_t i = 1; i < lowest.size(); i++)
+        {
+            binary_search_insert(largest, lowest[i], 0, largest.size() - 1);
+        }
+        if (leftover != -1) 
+            binary_search_insert(largest, leftover, 0, largest.size() - 1);
     }
-    if (leftover != -1) 
-        binary_search_insert(largest, leftover, 0, largest.size() - 1);
+    else
+    {
+        args.push_back(atoi(av[1]));
+        largest.push_back(atoi(av[1]));
+    }
     end = std::clock();
     std::cout << "Before: "; print_STL(args); std::cout << std::endl;
     std::cout << "After: "; print_STL(largest); std::cout << std::endl;
@@ -96,17 +103,25 @@ void  PmergeMe::merge_insert_sort_deque(int ac, char *av[])
     std::clock_t start;
 	std::clock_t end;
     start = std::clock();
-    args_to_deque(ac, av);
-    if (!array_is_sorted(pair_deque))
-        merge_sort(pair_deque, 0, pair_deque.size() - 1);
-    split_pairs("deque");
-    largest_dq.insert(largest_dq.begin(), lowest_dq[0]);
-    for(size_t i = 1; i < lowest_dq.size(); i++)
+    if (ac > 2)
     {
-        binary_search_insert(largest_dq, lowest_dq[i], 0, largest_dq.size() - 1);
+        args_to_deque(ac, av);
+        if (!array_is_sorted(pair_deque))
+            merge_sort(pair_deque, 0, pair_deque.size() - 1);
+        split_pairs("deque");
+        largest_dq.insert(largest_dq.begin(), lowest_dq[0]);
+        for(size_t i = 1; i < lowest_dq.size(); i++)
+        {
+            binary_search_insert(largest_dq, lowest_dq[i], 0, largest_dq.size() - 1);
+        }
+        if (leftover != -1) 
+            binary_search_insert(largest_dq, leftover, 0, largest_dq.size() - 1);
     }
-    if (leftover != -1) 
-        binary_search_insert(largest_dq, leftover, 0, largest_dq.size() - 1);
+    else
+    {
+        args.push_back(atoi(av[1]));
+        largest_dq.push_back(atoi(av[1]));
+    }
     end = std::clock();
     std::cout << "Time to process a range of " << largest_dq.size() <<  " elements with std::deque :" << (end - start) << " us" << std::endl;
 }
