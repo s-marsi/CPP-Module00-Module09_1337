@@ -4,7 +4,7 @@
 template <typename T>
 bool array_is_sorted(T &arr_to_sort) {
     if (arr_to_sort.size() <= 1)
-     return (true);
+        return (true);
     bool is_sorted = false;
     for (size_t i = 0; i < arr_to_sort.size() - 1; i++) {
         if (arr_to_sort[i].second > arr_to_sort[i+1].second)
