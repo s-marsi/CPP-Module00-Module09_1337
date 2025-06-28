@@ -116,8 +116,6 @@ void BitcoinExchange::parseData() {
         if (i == 0) {
             if (line !=  "date | value")
                 std::cout << "Error: bad input => " << line << std::endl;
-            else
-                std::cout << line << std::endl;
         }
         else {
             Data data;
