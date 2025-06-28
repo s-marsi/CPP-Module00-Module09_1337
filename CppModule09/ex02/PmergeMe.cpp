@@ -123,7 +123,7 @@ void  PmergeMe::merge_insert_sort_deque(int ac, char *av[])
         largest_dq.push_back(atoi(av[1]));
     }
     end = std::clock();
-    std::cout << "Time to process a range of " << largest_dq.size() <<  " elements with std::deque :" << (end - start) << " us" << std::endl;
+    std::cout << "Time to process a range of " << largest_dq.size() <<  " elements with std::deque :"  << (end - start) << " us" << std::endl;
 }
 
 void  PmergeMe::args_to_deque(int ac, char *av[])
